@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>HBM4核心技术指标分析</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; margin: 40px; background: #f9f9f9; color: #222; }
+        h1, h2 { color: #2a4d8f; }
+        .spec-table { border-collapse: collapse; width: 80%; margin: 24px 0; background: #fff; }
+        .spec-table th, .spec-table td { border: 1px solid #ddd; padding: 10px 16px; }
+        .spec-table th { background: #e6ecfa; }
+        .highlight { color: #d9534f; font-weight: bold; }
+        ul { margin: 0 0 0 24px; }
+        .note { color: #888; font-size: 0.95em; }
+    </style>
+</head>
+<body>
+    <h1>HBM4核心技术指标分析</h1>
+    <h2>基本信息</h2>
+    <ul>
+        <li><b>产品代际：</b> HBM4（第六代高带宽存储）</li>
+        <li><b>主要厂商：</b> SAMSUNG、SK hynix、Micron</li>
+        <li><b>量产时间：</b> 2025年3月（SK hynix 12层HBM4）</li>
+        <li><b>典型应用：</b> 高端数据中心GPU/加速器（NVIDIA Rubin、AMD Instinct MI系列、Intel Gaudi/Ponte Vecchio后续产品）</li>
+    </ul>
+
+    <h2>核心技术指标</h2>
+    <table class="spec-table">
+        <tr><th>指标</th><th>参数/说明</th></tr>
+        <tr><td>最大带宽</td><td class="highlight">2 TB/s</td></tr>
+        <tr><td>性能提升</td><td>较HBM3E提升约60%</td></tr>
+        <tr><td>堆叠层数</td><td>4、8、12或16层DRAM die</td></tr>
+        <tr><td>通道数</td><td>最多32 Channel/Device</td></tr>
+        <tr><td>每通道宽度</td><td>64bit DDR数据总线</td></tr>
+        <tr><td>伪通道（Pseudo Channel）</td><td>每通道2个伪通道，PC模式32 DQ宽度</td></tr>
+        <tr><td>每通道密度</td><td>3 - 16 Gb</td></tr>
+        <tr><td>每通道Bank数</td><td>16、32、48或64（随密度变化）</td></tr>
+        <tr><td>Page Size</td><td>每伪通道1 KB</td></tr>
+        <tr><td>预取</td><td>256bit</td></tr>
+        <tr><td>BL（突发长度）</td><td>8</td></tr>
+        <tr><td>命令/地址时钟</td><td>差分时钟输入（CK_t/CK_c），DDR命令/地址</td></tr>
+        <tr><td>电压</td><td>DRAM内核1.05V，I/O电压独立</td></tr>
+        <tr><td>自刷新</td><td>支持</td></tr>
+        <tr><td>Bank分组</td><td>支持</td></tr>
+        <tr><td>信号接口</td><td>Unterminated</td></tr>
+    </table>
+
+    <h2>技术亮点</h2>
+    <ul>
+        <li>分布式接口，通道完全独立，提升并行性与带宽利用率</li>
+        <li>半独立行列命令接口，允许激活/预充电与读/写命令并行</li>
+        <li>支持高堆叠层数，容量与带宽大幅提升</li>
+        <li>伪通道架构，优化访问效率</li>
+        <li>高带宽、低功耗设计，适配AI/高性能计算需求</li>
+    </ul>
+
+    <h2>与HBM3、DDR5颗粒的对比分析</h2>
+    <table class="spec-table">
+        <tr>
+            <th>指标</th>
+            <th>HBM4</th>
+            <th>HBM3</th>
+            <th>DDR5颗粒</th>
+        </tr>
+        <tr>
+            <td>最大带宽</td>
+            <td class="highlight">2 TB/s（单颗HBM4）</td>
+            <td>819 GB/s（单颗，16层，典型）</td>
+            <td>~6.4 GB/s（单颗DDR5-6400，x8）</td>
+        </tr>
+        <tr>
+            <td>IO位宽</td>
+            <td>2048bit（32通道×64bit）</td>
+            <td>1024bit（16通道×64bit）</td>
+            <td>8bit（x8）或16bit（x16）</td>
+        </tr>
+        <tr>
+            <td>堆叠层数</td>
+            <td>4、8、12或16</td>
+            <td>8、12或16</td>
+            <td>单层</td>
+        </tr>
+        <tr>
+            <td>预取</td>
+            <td>256bit</td>
+            <td>128bit</td>
+            <td>16bit</td>
+        </tr>
+        <tr>
+            <td>电压</td>
+            <td>1.05V（内核）</td>
+            <td>1.1V（内核）</td>
+            <td>1.1V</td>
+        </tr>
+        <tr>
+            <td>典型应用</td>
+            <td>高端AI、数据中心GPU/加速器</td>
+            <td>AI、HPC、数据中心</td>
+            <td>PC、服务器、通用计算</td>
+        </tr>
+    </table>
+    <ul>
+        <li><b>带宽：</b> 单颗HBM4带宽远超HBM3和DDR5颗粒，适合极高带宽需求。</li>
+        <li><b>位宽与堆叠：</b> HBM4 IO更宽、堆叠层数更多，HBM3次之，DDR5颗粒为单层、窄IO。</li>
+        <li><b>应用：</b> HBM4/3主攻AI/高性能计算，DDR5颗粒为主流PC/服务器内存基础单元。</li>
+    </ul>
+
+    <h2>DDR5方案实现HBM3/HBM4带宽的可行性分析</h2>
+    <p>假设单颗DDR5-6400（x8）带宽约6.4 GB/s，HBM3单颗带宽约819 GB/s，HBM4单颗带宽约2 TB/s。</p>
+    <table class="spec-table">
+        <tr>
+            <th>目标带宽</th>
+            <th>单颗DDR5带宽</th>
+            <th>所需DDR5颗粒数量</th>
+        </tr>
+        <tr>
+            <td>HBM3（819 GB/s）</td>
+            <td>6.4 GB/s</td>
+            <td class="highlight">约128颗</td>
+        </tr>
+        <tr>
+            <td>HBM4（2 TB/s = 2048 GB/s）</td>
+            <td>6.4 GB/s</td>
+            <td class="highlight">约320颗</td>
+        </tr>
+    </table>
+    <canvas id="bandwidthChart" width="600" height="320" style="margin:32px 0 0 0;"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('bandwidthChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['单颗DDR5', '128颗DDR5≈HBM3', '320颗DDR5≈HBM4', 'HBM3', 'HBM4'],
+                datasets: [{
+                    label: '带宽 (GB/s)',
+                    data: [6.4, 819, 2048, 819, 2048],
+                    backgroundColor: [
+                        '#6fa8dc', '#93c47d', '#ffd966', '#e06666', '#674ea7'
+                    ]
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'DDR5堆叠与HBM3/HBM4带宽对比' }
+                },
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'GB/s' } }
+                }
+            }
+        });
+    </script>
+    <ul>
+        <li>要用DDR5颗粒实现HBM3/4的带宽，需要极大量的并行颗粒，实际系统设计难度极高。</li>
+        <li>DDR5方案在主板空间、功耗、信号完整性、控制复杂度等方面远不如HBM方案。</li>
+        <li>HBM通过高堆叠、高IO宽度和专用接口实现极高带宽，适合AI/高性能计算。</li>
+    </ul>
+
+    <div class="note">注：数据来源于《HBM4技术前瞻》文档整理。</div>
+</body>
+</html>
